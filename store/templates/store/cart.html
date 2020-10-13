@@ -1,0 +1,57 @@
+{% extends "./base.html" %}
+{% load tshirt_tags %}
+{% block content %}
+
+    <div class="container">
+        <div>
+            <table class="table table-hover table-stripped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Tshirt</th>
+                        <th>Size</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Sale Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for c in cart %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><img height="70px" class="img rounded-circle" src='{{ c.tshirt.image.url }}'/></td>
+                            <td>{{ c.tshirt.name }}</td>
+                            <td>{{c.size.size}}</td>
+                            <td>{{c.size.price|rupee}}</td>
+                            <td>{{c.tshirt.discount}}%</td>
+                            <td>{% clc_sale_price c.size.price c.tshirt.discount as sale_price %} {{sale_price|rupee}}</td>
+                            <td>{{c.quantity}}</td>
+                            <td>{% multiply c.quantity sale_price as total %}{{total|rupee}}</td>
+                        </tr>
+
+                    {% endfor %}
+
+
+                    <tfoot>
+                        <tr>
+                            <th colspan="3"></th>
+                            <th colspan="5">Payable Amount</th>
+                            <th>{{ cart|cal_total_payable_amount|rupee }}</th>
+                        </tr>
+                        <tr>
+                            <th colspan="7"></th>
+                            <th colspan="2"><a href="/checkout"  class="btn btn-outline-dark">Continue to Checkout</a></th>
+                        </tr>
+                    </tfoot>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+
+{% endblock %}

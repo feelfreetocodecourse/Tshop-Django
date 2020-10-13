@@ -1,0 +1,23 @@
+{% extends "./base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    
+    <div class="col-lg-4 mx-auto border rounded p-3 mt-4">
+    
+        <form action="/login/" method="post">
+         {% csrf_token %}
+         <h1 class="display-4 text-center">Login Here</h1>
+         
+        <div class="text-center">
+            <img height="90px" src="https://www.vippng.com/png/detail/103-1033746_png-transparent-library-bleu-tshirt-clip-art-at.png" alt="">
+        </div>
+        <hr>
+         {{ form|crispy }}
+     
+         <div class="form-group">
+             <input  class="btn btn-info" type="submit" value="Login">
+         </div>
+        </form>
+     </div>
+{% endblock %}
